@@ -37,6 +37,7 @@ public class CategoriaRepository {
     }
 
     // Buscar una categoría por ID
+    @SuppressWarnings("deprecation")
     public Categoria findById(int id) {
         String sql = "SELECT * FROM CATEGORIAS WHERE ID = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, rowMapper);

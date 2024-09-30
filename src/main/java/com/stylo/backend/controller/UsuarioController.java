@@ -33,32 +33,17 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUsuario(@RequestBody Usuario usuario) {
-        try {
-            usuarioService.createUsuario(usuario);
-            return ResponseEntity.ok("Usuario creado exitosamente");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al crear el usuario: " + e.getMessage());
-        }
+    public void createUsuario(@RequestBody Usuario usuario) {
+        usuarioService.createUsuario(usuario);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
-        try {
-            usuarioService.updateUsuario(id, usuario);
-            return ResponseEntity.ok("Usuario actualizado exitosamente");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al actualizar el usuario: " + e.getMessage());
-        }
+    public void updateUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
+        usuarioService.updateUsuario(id, usuario);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUsuario(@PathVariable int id) {
-        try {
-            usuarioService.deleteUsuario(id);
-            return ResponseEntity.ok("Usuario eliminado exitosamente");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al eliminar el usuario: " + e.getMessage());
-        }
+    public void deleteUsuario(@PathVariable int id) {
+        usuarioService.deleteUsuario(id);
     }
 }
