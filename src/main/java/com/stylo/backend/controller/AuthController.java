@@ -35,23 +35,42 @@ public class AuthController {
         // Generar el token JWT
         String token = jwtUtil.generateToken(usuario.getEmail());
 
-        // Devolver el token como respuesta
-        return ResponseEntity.ok(Map.of("token", token));
+        // Devolver el token y la información del usuario como respuesta
+        return ResponseEntity.ok(Map.of(
+            "token", token,
+            "usuario", Map.of(
+                "id", usuario.getId(),
+                "nombre", usuario.getNombre(),
+                "email", usuario.getEmail(),
+                "rolId", usuario.getRolId()
+            )
+        ));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Usuario usuario) {
-        // Obtener usuario por email
-        Usuario usuarioDb = usuarioService.obtenerPorEmail(usuario.getEmail());
+public ResponseEntity<?> login(@RequestBody Usuario usuario) {
+    // Obtener usuario por email
+    Usuario usuarioDb = usuarioService.obtenerPorEmail(usuario.getEmail());
 
-        // Verificar credenciales
-        if (usuarioDb != null && usuarioService.verificarContraseña(usuario.getPasswordHash(), usuarioDb.getPasswordHash())) {
-            // Generar token JWT
-            String token = jwtUtil.generateToken(usuario.getEmail());
-            return ResponseEntity.ok(Map.of("token", token));
-        }
+    // Verificar credenciales
+    if (usuarioDb != null && usuarioService.verificarContraseña(usuario.getPasswordHash(), usuarioDb.getPasswordHash())) {
+        // Generar token JWT
+        String token = jwtUtil.generateToken(usuario.getEmail());
 
-        // Si las credenciales son inválidas
-        return ResponseEntity.status(401).body("Credenciales inválidas");
+        // Devolver el token y la información del usuario como respuesta
+        return ResponseEntity.ok(Map.of(
+            "token", token,
+            "usuario", Map.of(
+                "id", usuarioDb.getId(),
+                "nombre", usuarioDb.getNombre(),
+                "email", usuarioDb.getEmail(),
+                "rolId", usuarioDb.getRolId()
+            )
+        ));
     }
+
+    // Si las credenciales son inválidas
+    return ResponseEntity.status(401).body("Credenciales inválidas");
+}
+
 }
