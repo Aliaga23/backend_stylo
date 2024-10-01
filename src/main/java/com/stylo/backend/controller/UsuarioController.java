@@ -1,5 +1,6 @@
 package com.stylo.backend.controller;
 
+import com.stylo.backend.dto.UsuarioInfoDTO;
 import com.stylo.backend.model.Usuario;
 import com.stylo.backend.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +46,9 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     public void deleteUsuario(@PathVariable int id) {
         usuarioService.deleteUsuario(id);
+    }
+    @GetMapping("/info-completa")
+    public List<UsuarioInfoDTO> obtenerInfoCompleta() {
+        return usuarioService.obtenerInfoUsuarios();
     }
 }

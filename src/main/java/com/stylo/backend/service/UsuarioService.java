@@ -1,5 +1,6 @@
 package com.stylo.backend.service;
 
+import com.stylo.backend.dto.UsuarioInfoDTO;
 import com.stylo.backend.model.Usuario;
 import com.stylo.backend.repository.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -55,5 +56,8 @@ public class UsuarioService {
     public void registrarUsuario(Usuario usuario) {
         usuario.setPasswordHash(passwordEncoder.encode(usuario.getPasswordHash()));
         usuarioRepository.save(usuario);
+    }
+    public List<UsuarioInfoDTO> obtenerInfoUsuarios() {
+        return usuarioRepository.obtenerInfoUsuarios();
     }
 }
